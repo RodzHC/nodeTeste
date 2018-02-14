@@ -2,14 +2,32 @@ var mysql = require("mysql");
 
  function createDBConnection(){
 
-  return mysql.createConnection({
+  if (!process.env.NODE_ENV || process.env.node === 'dev'){
+    return mysql.createConnection({
 
-    host:'192.168.0.83',
-    port:3306 ,
-    user:'teste',
-    password:'teste',
-    database:'teste',
-});
+      host:'localhost',
+      port:3306 ,
+      user:'root',
+      password:'Pokemon_377',
+      database:'node_dev',
+
+  });
+
+  }
+
+  if(process.env.NODE_ENV == 'test'){
+    return mysql.createConnection({
+
+      host:'localhost',
+      port:3306 ,
+      user:'root',
+      password:'Pokemon_377',
+      database:'node_teste',
+
+  });
+  }
+
+
 
 }
 

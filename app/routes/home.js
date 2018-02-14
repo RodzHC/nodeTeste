@@ -4,55 +4,27 @@
 module.exports = function(app){
 
 
+	var listaProdutos = function(req, res, next) {
+			var connection = app.infra.connectionFactory();
+			var produtosDAO = new app.infra.ProdutosDAO(connection);
 
-
-
-	app.get("/produtos",function(req, res) {
-
-	        var connection = app.infra.connectionFactory();
-	        var ProdutosDAO = new app.infra.ProdutosDAO(connection);
-
-	        ProdutosDAO.lista(function(err, results){
-
-	              res.format({
-	                html: function(){
-	                    res.render("lista",{lista:results});
-	                },
-	                json: function(){
-	                    res.json(results);
-	                }
-	            });
-
-	        });
-
-	        connection.end();
-
-	    });
-
-
-
-			app.get("/produtos",function(req, res) {
-
-							var connection = app.infra.connectionFactory();
-							var ProdutosDAO = new app.infra.ProdutosDAO(connection);
-
-							ProdutosDAO.lista(function(err, results){
-
-										res.format({
-
-											html: function(){
-													res.render("lista",{lista:results});
-											},
-											json: function(){
-													res.json(results);
-											}
-									});
-
-							});
-
-							connection.end();
-
+			produtosDAO.lista(function(err, results) {
+					if(err){return next(err); }
+					res.format({
+							html: function() {
+									res.render('lista', {lista:results});
+							},
+							json: function() {
+									res.json(results);
+							}
 					});
+			});
+
+			connection.end();
+	}
+
+
+	app.get("/produtos",listaProdutos);
 
 
 	app.post('/produtos', function(req,res){
@@ -68,12 +40,23 @@ module.exports = function(app){
         var errors = req.validationErrors();
 
         if(errors){
-            res.render('form', {errosValidacao:errors});
-            return;
-        }
+
+					res.format({
+							html: function() {
+									res.status(400).render('form', {errosValidacao:errors,produto:produto});
+							},
+							json: function() {
+									res.status(400).json(errors);
+							}
+
+
+        	});
+
+					return ;
+				}
 
 				var connection = app.infra.connectionFactory();
-				var produtosDao = new app.infra.ProdutosDao(connection);
+				var produtosDAO = new app.infra.ProdutosDAO(connection);
 
 				produtosDAO.salva(produto, function(erro,results){ res.redirect("/produtos"); });
 
@@ -81,13 +64,23 @@ module.exports = function(app){
 
 	});
 
+
 	app.get('/form', function(req, res){
 
 
-		res.render('form',{errosValidacao:{}});
+		res.render('form',{errosValidacao:{}, produto:{}});
 
 	})
 
+	app.post('/produtos/deletatudo', function(req, res){
+
+		var connection = app.infra.connectionFactory();
+		var produtosDAO = new app.infra.ProdutosDAO(connection);
+
+		produtosDAO.deletaTudo(res.redirect("/produtos"));
+
+
+	})
 
 
 
