@@ -9,7 +9,7 @@ var configuracoes = {
   headers:{
 
     'Accept': 'application/json',
-    'Content-type':'application/json'    
+    'Content-type':'application/json'
 }
 
       // Normalmente "text/html"
@@ -29,10 +29,10 @@ var client = http.request (configuracoes, function(res){
 
 var produto = {
 
-  titulo:"mais sobre node",
+  titulo:"",
   descricao : "node javascript",
   preco: 100
 
 };
 
-client.end (JSON.stringft(produto));
+client.end (JSON.stringify(produto));

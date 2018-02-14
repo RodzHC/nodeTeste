@@ -1,4 +1,12 @@
 <html>
+
+    <head>
+      <meta charset="utf-8"/>
+      <link rel="stylesheet" href="/bootstrap-theme.css">
+      <link rel="stylesheet" href="/bootstrap.css">
+      <link rel="stylesheet" href="/teste">
+    </head>
+
     <body>
       <%if(errosValidacao){%>
                 <ul>
@@ -8,20 +16,21 @@
                 </ul>
              <%}%>
         <form action="/produtos" method="post">
-            <div>
+            <div class="form-group">
                 <label for="titulo">Título</label>
-                <input type="text" id="titulo" name="titulo" placeholder="Informe o titulo do Livro"/>
+                <input type="text" id="titulo" class="form-control" name="titulo" placeholder="Informe o titulo do Livro" value="<%=produto.titulo%>"/>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="preco">Preço</label>
-                <input type="text" id="preco" name="preco" placeholder="120.05"/>
+                <input type="text" id="preco" class="form-control" name="preco" value="<%=produto.preco%>" placeholder="120.05"/>
             </div>
             <div>
                 <label for="descricao">Descrição</label>
-                <textarea cols="20" rows="10" id="descricao" name="descricao" placeholder="Fale sobre o livro"></textarea>
+                <textarea cols="20" rows="10" id="descricao" class="form-control" name="descricao"  placeholder="Fale sobre o livro"><%=produto.descricao%></textarea>
             </div>
 
-            <input type="submit" value="Gravar"/>
+            <input class="btn btn-primary" type="submit" value="Gravar"/>
         </form>
     </body>
 </html>
+  
