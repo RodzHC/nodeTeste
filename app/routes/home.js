@@ -65,22 +65,8 @@ module.exports = function(app){
 	});
 
 
-	app.get('/form', function(req, res){
 
 
-		res.render('form',{errosValidacao:{}, produto:{}});
-
-	})
-
-	app.post('/produtos/deletatudo', function(req, res){
-
-		var connection = app.infra.connectionFactory();
-		var produtosDAO = new app.infra.ProdutosDAO(connection);
-
-		produtosDAO.deletaTudo(res.redirect("/produtos"));
-
-
-	})
 
 
 

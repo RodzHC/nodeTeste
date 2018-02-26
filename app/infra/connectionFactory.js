@@ -5,11 +5,11 @@ var mysql = require("mysql");
   if (!process.env.NODE_ENV || process.env.node === 'dev'){
     return mysql.createConnection({
 
-      host:'localhost',
+      host:'192.168.0.83',
       port:3306 ,
-      user:'root',
-      password:'Pokemon_377',
-      database:'node_dev',
+      user:'teste',
+      password:'qweasdzxc',
+      database:'nodeDBDev',
 
   });
 
@@ -20,12 +20,25 @@ var mysql = require("mysql");
 
       host:'localhost',
       port:3306 ,
-      user:'root',
-      password:'Pokemon_377',
+      user:'teste',
+      password:'qweasdzxc',
       database:'node_teste',
 
   });
   }
+
+  if(process.env.NODE_ENV == 'production'){
+    return mysql.createConnection({
+
+      host:'localhost',
+      port:3306 ,
+      user:'rodz',
+      password:'qweasdzxc',
+      database:'node_teste',
+
+  });
+  }
+
 
 
 
